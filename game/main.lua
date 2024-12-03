@@ -96,7 +96,7 @@ bodyParts = {
     { spanish = "HUESO", nahuatl = "TLAPALLI", english = "BONE" }
 }
 
-actions = {
+verbs = {
     { spanish = "COMER", nahuatl = "TLACUA", english = "EAT" },
     { spanish = "BEBER", nahuatl = "TOMI", english = "DRINK" },
     { spanish = "CAMINAR", nahuatl = "OHUAYA", english = "WALK" },
@@ -152,6 +152,8 @@ started = false
 first_lang_chosen = false
 second_lang_chosen = false
 delay_screen = 5
+level = ""
+level_chosen = false
 
 -- Shuffle an array
 function shuffle(t)
@@ -165,8 +167,8 @@ end
 function prepare_game(island)
     local all_words = {}
     for _, word in ipairs(island) do
-        table.insert(all_words, {text = word.spanish, pair = word.nahuatl})
-        table.insert(all_words, {text = word.nahuatl, pair = word.spanish})
+        table.insert(all_words, {text = word[first_lang], pair = word[second_lang]})
+        table.insert(all_words, {text = word[second_lang], pair = word[first_lang]})
     end
     shuffle(all_words)
     for i, card in ipairs(cards) do
@@ -175,7 +177,24 @@ function prepare_game(island)
 end
 
 function init_game()
-    prepare_game(numbers)
+    if level == "numbers" then
+        prepare_game(numbers)
+    end
+    if level == "months" then
+        prepare_game(months)
+    end
+    if level == "days" then
+        prepare_game(days)
+    end
+    if level == "colors" then
+        prepare_game(colors)
+    end
+    if level == "bodyParts" then
+        prepare_game(bodyParts)
+    end
+    if level == "verbs" then
+        prepare_game(verbs)
+    end
     for _, card in pairs(cards) do
         reset_card(card)
     end
@@ -317,24 +336,24 @@ function choose_sec_lang()
     local first_option = ""
     local second_option = ""
 
-    print(messages[first_lang], 3 * 8, 4 * 8, 0)
+    print(messages[first_lang], 1.5 * 8, 4 * 8, 0)
     if first_lang == "spanish" then
         print("Ingles", 8.5 * 8, 11 * 8, 0)
-        first_option = english
+        first_option = "english"
         print("Nahuatl", 16.5 * 8, 11 * 8, 0)
-        second_option = nahuatl
+        second_option = "nahuatl"
     end 
     if first_lang == "english" then
         print("Spanish", 8.5 * 8, 11 * 8, 0)
-        first_option = spanish
+        first_option = "spanish"
         print("Nahuatl", 16.5 * 8, 11 * 8, 0)
-        first_option = nahuatl
+        second_option = "nahuatl"
     end 
     if first_lang == "nahuatl" then
         print("Kastilla", 8.5 * 8, 11 * 8, 0)
-        first_option = spanish
+        first_option = "spanish"
         print("Inglis", 16.5 * 8, 11 * 8, 0)
-        first_option = english
+        second_option = "english"
     end
 
     local mx, my, left = mouse()
@@ -343,16 +362,125 @@ function choose_sec_lang()
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
+            delay_screen = 5
             second_lang_chosen = true
             second_lang = first_option
+            choose_island()
         end
     end
     if left and mx >= 16 * 8 and mx <= 21 * 8 and my >= 9 * 8 and my <= 12 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
+            delay_screen = 5
             second_lang_chosen = true
             second_lang = second_option
+            choose_island()
+        end
+    end
+end
+
+function choose_island()
+    cls(0)
+    map(120, 0, 30, 17, 0, 0)
+    
+    local numbers_island = {
+        spanish = "Isla de los Numeros",
+        english = "Island of Numbers",
+        nahuatl = "Cempohualli Ilhuikani"
+    }
+
+    local months_island = {
+        spanish = "Isla de los Meses",
+        english = "Island of Months",
+        nahuatl = "Metztli Ilhuikani"
+    }
+
+    local days_island = {
+        spanish = "Isla de los Dias",
+        english = "Island of Days",
+        nahuatl = "Tonalmeh Ilhuikani"
+    }
+
+    local colors_island = {
+        spanish = "Isla de los Colores",
+        english = "Island of Colors",
+        nahuatl = "Tlapalli Ilhuikani"
+    }
+
+    local body_island = {
+        spanish = "Isla del Cuerpo",
+        english = "Island of Body",
+        nahuatl = "Tlazahkitl Ilhuikani"
+    }
+
+    local verbs_island = {
+        spanish = "Isla de los verbos",
+        english = "Island of Verbs",
+        nahuatl = "Tlazohkamati Ilhuikani "
+    }
+
+    print(numbers_island[first_lang], 1.5 * 8, 3 * 8, 0)
+    print(months_island[first_lang], 7.5 * 8, 7 * 8, 0)
+    print(days_island[first_lang], 16.5 * 8, 3 * 8, 0)
+    print(colors_island[first_lang], 1.5 * 8, 10 * 8, 0)
+    print(body_island[first_lang], 7.5 * 8, 14 * 8, 0)
+    print(verbs_island[first_lang], 16.5 * 8, 10 * 8, 0)
+
+    local mx, my, left = mouse()
+    
+    if left and mx >= 3 * 8 and mx <= 6 * 8 and my >= 4 * 8 and my <= 6 * 8 then
+        if delay_screen > 0 then
+            delay_screen = delay_screen - 1
+        else
+            level = "numbers";
+            level_chosen = true
+            delay_screen = 5
+        end
+    end
+    if left and mx >= 13 * 8 and mx <= 16 * 8 and my >= 4 * 8 and my <= 6 * 8 then
+        if delay_screen > 0 then
+            delay_screen = delay_screen - 1
+        else
+            level = "months";
+            level_chosen = true
+            delay_screen = 5
+        end
+    end
+    if left and mx >= 23 * 8 and mx <= 26 * 8 and my >= 4 * 8 and my <= 6 * 8 then
+        if delay_screen > 0 then
+            delay_screen = delay_screen - 1
+        else
+            level = "days";
+            level_chosen = true
+            delay_screen = 5
+        end
+    end
+    if left and mx >= 3 * 8 and mx <= 6 * 8 and my >= 11 * 8 and my <= 13 * 8 then
+        if delay_screen > 0 then
+            delay_screen = delay_screen - 1
+        else
+            level = "colors";
+            level_chosen = true
+            delay_screen = 5
+        end
+    end
+    if left and mx >= 13 * 8 and mx <= 16 * 8 and my >= 11 * 8 and my <= 13 * 8 then
+        if delay_screen > 0 then
+            delay_screen = delay_screen - 1
+        else
+            level = "bodyParts";
+            level_chosen = true
+            delay_screen = 5
+        end
+    end
+    if left and mx >= 23 * 8 and mx <= 26 * 8 and my >= 11 * 8 and my <= 13 * 8 then
+        if delay_screen > 0 then
+            delay_screen = delay_screen - 1
+        else
+            level = "verbs";
+            level_chosen = true
+            delay_screen = 5
         end
     end
 end
@@ -362,12 +490,16 @@ function TIC()
     if started then 
         if first_lang_chosen then
             if second_lang_chosen then
-                if not initialized then
-                    init_game()
-                    initialized = true
+                if level_chosen then
+                    if not initialized then
+                        init_game()
+                        initialized = true
+                    end
+                    update_game()
+                    draw_game()
+                else
+                    choose_island()
                 end
-                update_game()
-                draw_game()
             else
                 choose_sec_lang()
             end
@@ -382,7 +514,7 @@ end
 function flip_card(card)
     for x = card.x1, card.x2 do
         for y = card.y1, card.y2 do
-            mset(x, y, 1)
+            mset(x, y, 255)
         end
     end
 end
