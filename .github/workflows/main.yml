@@ -3,7 +3,7 @@ name: Unzip and Copy to Docs
 on:
   push:
     branches:
-      - main  # Cambia a la rama que desees
+      - main 
 
 jobs:
   unzip_and_copy:
