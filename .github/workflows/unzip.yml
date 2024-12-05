@@ -1,0 +1,31 @@
+name: Unzip and Copy to Docs
+
+on:
+  push:
+    branches:
+      - main  # Cambia a la rama que desees
+
+jobs:
+  unzip_and_copy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Unzip the uploaded file
+        run: |
+          unzip -o game/nahuatl-memorice.zip -d temp_unzip/
+
+      - name: Move unzipped files to /docs
+        run: |
+          mkdir -p docs
+          cp -r temp_unzip/* docs/
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add docs
+          git commit -m "Update docs with unzipped content"
+          git push
