@@ -24,8 +24,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config user.name "dixnne"
-          git config user.email "dianapa.narvaez@gmail.com"
+          git config user.name "Diana Narvaez"
+          git config user.email "dixnne@users.noreply.github.com"
           git add docs
           git commit -m "Update docs with unzipped content"
           git push
