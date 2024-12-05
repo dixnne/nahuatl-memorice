@@ -4,6 +4,8 @@
 
 Cacahuate Studios se enorgullece de estar a favor de la integración de diferentes culturas y lenguajes, ya que esto es un pilar indispensable para el desarrollo como sociedad.
 
+Integrantes: Diana Narváez y Sergio Vargas.
+
 ## Sobre el juego
 
 ### Contexto e Historia
