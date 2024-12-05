@@ -25,6 +25,7 @@ jobs:
         run: |
           mkdir -p docs
           cp -r temp_unzip/* docs/
+          rm -r temp_unzip
 
       - name: Commit and push changes
         run: |
