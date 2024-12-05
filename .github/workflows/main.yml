@@ -47,6 +47,7 @@ jobs:
       # environment created automatically by GitHub
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
@@ -65,3 +66,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        with:
+          folder: docs # The folder the action should deploy.
