@@ -162,6 +162,7 @@ level = ""
 level_chosen = false
 current_narration = 1
 narration_ended = false
+credits_open = false
 
 
 function reset_game()
@@ -460,6 +461,7 @@ function main_screen()
     print("Las Islas del Saber", 9.5 * 8, 5 * 8, 2)
     print("Start", 14 * 8, 10 * 8, 0)
     print("© Cacahuate Studios", 9 * 8, 15.5 * 8, 0)
+    print("Creditos", 13 * 8, 14 * 8, 0)
 
     local mx, my, left = mouse()
 
@@ -471,6 +473,15 @@ function main_screen()
             started = true
             delay_screen = 20
             choose_main_lang()
+        end
+    end
+    if left and mx >= 11 * 8 and mx <= 18 * 8 and my >= 14 * 8 and my <= 15 * 8 - 1 then  
+        if delay_screen > 0 then
+            delay_screen = delay_screen - 1
+        else
+            left = false
+            credits_open = true
+            delay_screen = 20
         end
     end
 end
@@ -834,9 +845,35 @@ function narration()
     end
 end
 
+function credits()
+    play_music(3)
+    cls(0)
+    map(30, 51, 30, 17, 0, 0)
+    
+    print("Creditos", 12 * 8, 2 * 8, 3 * 8, 2)
+    print("Juego: Diana - Sergio", 3 * 8, 5 * 8, 3 * 8, 0)
+    print("Musica: Sergio Vargas", 3 * 8, 7 * 8, 3 * 8, 0)
+    print("Arte: Diana Narvaez", 3 * 8, 9 * 8, 3 * 8, 0)
+
+    local mx, my, left = mouse()
+
+    -- Go back button
+    local button_x, button_y = 226, 3 
+    local button_width, button_height = 10, 10
+    rect(button_x, button_y, button_width, button_height, 3)
+    print("<", button_x + 3.5, button_y + 3, 15)
+    if left and mx >= button_x and mx <= button_x + button_width and my >= button_y and my <= button_y + button_height then
+        if delay_screen > 0 then
+            delay_screen = delay_screen - 1
+        else
+            credits_open = false
+            delay_screen = 10
+        end
+    end
+end
+
 -- TIC function
 function TIC()
-    
     if started then 
         if first_lang_chosen then
             if second_lang_chosen then
@@ -861,7 +898,11 @@ function TIC()
             choose_main_lang()
         end
     else
-        main_screen()
+        if credits_open then
+            credits()
+        else
+            main_screen()
+        end
     end
 end
 
