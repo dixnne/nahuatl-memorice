@@ -235,7 +235,7 @@ end
 
 
 function init_game()
-   
+ 
     if level == "numbers" then
         prepare_game(numbers)
     end
@@ -254,7 +254,7 @@ function init_game()
     if level == "verbs" then
         prepare_game(verbs)
     end
-    music(1, 0, true) -- Reproducir pista 1 desde el inicio y en bucle
+
     for _, card in pairs(cards) do
         reset_card(card)
     end
@@ -263,6 +263,7 @@ end
 
 
 function update_game()
+    play_music(3)
     -- Actualizar el temporizador
     if remaining_time > 0 and #matches < #cards then
         remaining_time = remaining_time - 1 / 60 -- Descuenta tiempo
@@ -273,23 +274,6 @@ function update_game()
             return
         end
     end
-
-    -- local mx, my, left = mouse()
-
-    -- Detectar clic en el botón de menú
-    -- if left and mx >= 224 and mx <= 256 and my >= 8 and my <= 24 then
-        -- options_menu_open = not options_menu_open
-    -- end
-
-    -- Detectar clic en las opciones del menú
-    -- if options_menu_open then
-        -- if left and mx >= 184 and mx <= 264 and my >= 24 and my <= 40 then
-            -- Opción 1: Regresar al menú principal
-            -- current_screen = "main_screen"
-            -- reset_game()
-            -- options_menu_open = false
-        -- end
-    -- end
 
     -- Manejo de retraso al voltear cartas
     if delay_counter > 0 then
@@ -381,7 +365,6 @@ end
 
 
 function draw_game()
-    play_music(1) -- Reproduce la música del patrón 1 para las islas
     cls(0)
     if level == "numbers" then
         map(0, 0, 30, 17, 0, 0)
