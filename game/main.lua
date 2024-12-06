@@ -9,7 +9,6 @@
 
 time_limit = 60 -- Tiempo límite en segundos
 remaining_time = time_limit
-
 current_music = nil
 
 
