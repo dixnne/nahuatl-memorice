@@ -23,7 +23,7 @@ jobs:
 
       - name: Move unzipped files to /html
         run: |
-          mkdir -p docs
+          mkdir -p html
           cp -r temp_unzip/* html/
           rm -r temp_unzip
 
