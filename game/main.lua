@@ -1,5 +1,5 @@
 -- title: Aztlan: Las Islas del Saber
--- author: Diana Narvaez - Sergio
+-- author: Diana Narvaez - Sergio Vargas
 -- desc: Memorice Nahuatl
 -- site: github.com/dixnne/nahuatl-memorice
 -- license: 

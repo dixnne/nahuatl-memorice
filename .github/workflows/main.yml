@@ -15,24 +15,24 @@ jobs:
 
       - name: Remove previous files
         run: |
-          rm -r html
+          rm -r docs
 
       - name: Unzip the uploaded file
         run: |
           unzip -o game/nahuatl-memorice.zip -d temp_unzip/
 
-      - name: Move unzipped files to /html
+      - name: Move unzipped files to /docs
         run: |
-          mkdir -p html
-          cp -r temp_unzip/* html/
+          mkdir -p docs
+          cp -r temp_unzip/* docs/
           rm -r temp_unzip
 
       - name: Commit and push changes
         run: |
           git config user.name "Diana Narvaez"
           git config user.email "dixnne@users.noreply.github.com"
-          git add html
-          git commit -m "Update html with unzipped content"
+          git add docs
+          git commit -m "Update docs with unzipped content"
           git push
 
   prepare-deploy:
@@ -61,10 +61,10 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # location of the coverage artifacts
-          path: "./html"
+          path: "./docs"
       
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          folder: html # The folder the action should deploy.
+          folder: docs # The folder the action should deploy.
