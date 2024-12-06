@@ -8,6 +8,9 @@ Integrantes: Diana Narváez y Sergio Vargas.
 
 ## Sobre el juego
 
+[Manual de Juego](https://dixnne.github.io/nahuatl-memorice-manual/)
+[Documentación](https://dixnne.github.io/nahuatl-memorice-docs/)
+
 ### Contexto e Historia
 
 En la mítica tierra de Aztlán, un poderoso chamán, Xiloticahualli, ha robado fragmentos esenciales de sabiduría: números, colores, días, meses, partes del cuerpo y verbos, condenando a su pueblo al olvido. Ahora, estos fragmentos están dispersos y protegidos en diferentes islas. Como el joven guerrero elegido, tu misión es restaurar el equilibrio recuperando las palabras robadas y derrotando al chamán.
@@ -36,4 +39,21 @@ El juego está diseñado para estudiantes, curiosos de la cultura náhuatl y gam
 ## Juega
 
 [Aztlán: Las Islas del Saber - Versión Web](https://dixnne.github.io/nahuatl-memorice)
+
+## Licencia
+
+Copyright (C) 2024  Cacahuate Studios
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 

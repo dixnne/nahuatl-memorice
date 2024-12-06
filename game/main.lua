@@ -161,7 +161,7 @@ delay_screen = 5
 level = ""
 level_chosen = false
 current_narration = 1
-narration_ended = true
+narration_ended = false
 
 
 function reset_game()
@@ -503,7 +503,7 @@ function choose_main_lang()
     end
     
     -- First lang button detections
-    if left and mx >= 4 * 8 and mx <= 9 * 8 and my >= 9 * 8 and my <= 12 * 8 then
+    if left and mx >= 4 * 8 and mx < 10 * 8 and my >= 9 * 8 and my < 13 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -513,7 +513,7 @@ function choose_main_lang()
             choose_sec_lang()
         end
     end
-    if left and mx >= 12 * 8 and mx <= 17 * 8 and my >= 9 * 8 and my <= 12 * 8 then
+    if left and mx >= 12 * 8 and mx < 18 * 8 and my >= 9 * 8 and my < 13 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -523,7 +523,7 @@ function choose_main_lang()
             choose_sec_lang()
         end
     end
-    if left and mx >= 20 * 8 and mx <= 25 * 8 and my >= 9 * 8 and my <= 12 * 8 then
+    if left and mx >= 20 * 8 and mx < 26 * 8 and my >= 9 * 8 and my < 12 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -585,7 +585,7 @@ function choose_sec_lang()
     end
 
     -- Second lang button detections
-    if left and mx >= 8 * 8 and mx <= 13 * 8 and my >= 9 * 8 and my <= 12 * 8 then
+    if left and mx >= 8 * 8 and mx < 14 * 8 and my >= 9 * 8 and my < 13 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -595,7 +595,7 @@ function choose_sec_lang()
             narration()
         end
     end
-    if left and mx >= 16 * 8 and mx <= 21 * 8 and my >= 9 * 8 and my <= 12 * 8 then
+    if left and mx >= 16 * 8 and mx < 22 * 8 and my >= 9 * 8 and my < 13 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -673,7 +673,7 @@ function choose_island()
     end
     
     -- Island button detections
-    if left and mx >= 3 * 8 and mx <= 6 * 8 and my >= 4 * 8 and my <= 6 * 8 then
+    if left and mx >= 3 * 8 and mx < 7 * 8 and my >= 4 * 8 and my < 7 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -682,7 +682,7 @@ function choose_island()
             delay_screen = 60
         end
     end
-    if left and mx >= 13 * 8 and mx <= 16 * 8 and my >= 4 * 8 and my <= 6 * 8 then
+    if left and mx >= 13 * 8 and mx < 17 * 8 and my >= 4 * 8 and my < 7 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -691,7 +691,7 @@ function choose_island()
             delay_screen = 60
         end
     end
-    if left and mx >= 23 * 8 and mx <= 26 * 8 and my >= 4 * 8 and my <= 6 * 8 then
+    if left and mx >= 23 * 8 and mx < 27 * 8 and my >= 4 * 8 and my < 7 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -700,7 +700,7 @@ function choose_island()
             delay_screen = 60
         end
     end
-    if left and mx >= 3 * 8 and mx <= 6 * 8 and my >= 11 * 8 and my <= 13 * 8 then
+    if left and mx >= 3 * 8 and mx < 7 * 8 and my >= 11 * 8 and my < 14 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -709,7 +709,7 @@ function choose_island()
             delay_screen = 60
         end
     end
-    if left and mx >= 13 * 8 and mx <= 16 * 8 and my >= 11 * 8 and my <= 13 * 8 then
+    if left and mx >= 13 * 8 and mx < 17 * 8 and my >= 11 * 8 and my < 14 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -718,7 +718,7 @@ function choose_island()
             delay_screen = 60
         end
     end
-    if left and mx >= 23 * 8 and mx <= 26 * 8 and my >= 11 * 8 and my <= 13 * 8 then
+    if left and mx >= 23 * 8 and mx < 27 * 8 and my >= 11 * 8 and my < 14 * 8 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -790,7 +790,7 @@ function narration()
     local mx, my, left = mouse()
 
     -- Next and back detections
-    if left and mx >= 25 * 8 and mx <= 26 * 8 - 1 and my >= 7 * 8 and my <= 8 * 8 - 1 then
+    if left and mx >= 25 * 8 and mx < 27 * 8 - 1 and my >= 7 * 8 and my < 9 * 8 - 1 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else
@@ -803,7 +803,7 @@ function narration()
             delay_screen = 10
         end
     end
-    if left and mx >= 4 * 8 and mx <= 5 * 8 - 1 and my >= 7 * 8 and my <= 8 * 8 - 1 then
+    if left and mx >= 4 * 8 and mx < 6 * 8 - 1 and my >= 7 * 8 and my < 9 * 8 - 1 then
         if delay_screen > 0 then
             delay_screen = delay_screen - 1
         else

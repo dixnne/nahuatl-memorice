@@ -61,10 +61,10 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # location of the coverage artifacts
-          path: "./docs"
+          path: "./html"
       
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          folder: docs # The folder the action should deploy.
+          folder: html # The folder the action should deploy.
