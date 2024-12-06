@@ -1,5 +1,5 @@
 -- title: Aztlan: Las Islas del Saber
--- author: Diana Narvaez - Sergio Vargas
+-- author: Diana Narvaez - Sergio
 -- desc: Memorice Nahuatl
 -- site: github.com/dixnne/nahuatl-memorice
 -- license: 
@@ -9,6 +9,7 @@
 
 time_limit = 60 -- Tiempo límite en segundos
 remaining_time = time_limit
+
 current_music = nil
 
 
@@ -317,16 +318,20 @@ function update_game()
                 if #selected_cards == 2 then
                     local card1 = cards[selected_cards[1]]
                     local card2 = cards[selected_cards[2]]
+                    
                     if card1.word.text == card2.word.pair or card2.word.text == card1.word.pair then
-                        -- Son un par, mantén visibles
+                        -- Son un par: reproducir sonido de acierto
                         table.insert(matches, selected_cards[1])
                         table.insert(matches, selected_cards[2])
+                        sfx(0) -- Reproducir sonido de match
                         selected_cards = {}
                     else
-                        -- No son un par, inicia retraso
-                        delay_counter = 60
+                        -- No son un par: reproducir sonido de falla
+                        sfx(1) -- Reproducir sonido de fail
+                        delay_counter = 60 -- Inicia retraso antes de voltearlas
                     end
                 end
+                
                 break
             end
         end
@@ -364,6 +369,17 @@ function draw_text_wrapped(text, x, y, max_width, max_height)
     end
 end
 
+function get_level_offset()
+    if level == "numbers" then return 0 end
+    if level == "months" then return 34 end
+    if level == "days" then return 17 end
+    if level == "colors" then return 85 end
+    if level == "bodyParts" then return 68 end
+    if level == "verbs" then return 51 end
+    return 0
+end
+
+
 function draw_game()
     play_music(1) -- Reproduce la música del patrón 1 para las islas
     cls(0)
@@ -394,13 +410,15 @@ function draw_game()
 
     -- Mostrar cartas
     for _, card in pairs(cards) do
-        if mget(card.x1, card.y1) ~= 0 then
+        local level_offset = get_level_offset()
+        if mget(card.x1, card.y1 + level_offset) ~= 0 then
             local text = card.word.text
             local max_width = (card.x2 - card.x1 + 1) * 8
             local max_height = (card.y2 - card.y1 + 1) * 8
             draw_text_wrapped(text, card.x1 * 8, card.y1 * 8, max_width, max_height)
         end
     end
+    
 
     -- Mostrar el temporizador
     local minutes = math.floor(remaining_time / 60)
@@ -607,6 +625,8 @@ function choose_sec_lang()
 end
 
 function choose_island()
+    -- Reproducir música de las Islas
+    play_music(3)
     cls(0)
     map(120, 0, 30, 17, 0, 0)
     
@@ -730,57 +750,70 @@ end
 
 -- Intro function
 function narration()
+    -- Reproducir música de la historia (reemplaza 2 con el índice de tu pista de música)
+    play_music(2)
     -- History depending on the first language
     local history = {
         {
-            spanish = "En la antigua y mística tierra de Aztlan, un vasto conocimiento fluia a través de sus pueblos, protegidos por los dioses y transmitidos de generacion en generacion.",
+            spanish = "En la antigua y mistica tierra de Aztlan, un vasto conocimiento fluia a traves de sus pueblos, protegidos por los dioses y transmitidos de generacion en generacion.",
             nahuatl = "Ipan huehueh tlaltikpak Aztlan, cenca hueyi tlahcuilolli xochitoca ompa tlaltikpak, toteucyo omopalehuilia opanitztih in tlakatl in tlakatl.",
             english = "In the ancient and mystical land of Aztlan, vast knowledge flowed through its people, protected by the gods and passed down from generation to generation."
         }, {
             spanish = "Pero un chaman ambicioso, conocido como Xiloticahualli, deseaba obtener todo ese poder para si mismo.",
             nahuatl = "Ika huei amochitl, Xiloticahualli, cenca onimitztlamahuiz ihuan huelic teteuctli inin tlahcuilolli hualmotlahuilia.",
-            english = "But an ambitious shaman, known as Xīlōticahualli, sought to gain all that power for himself."
-        }, {
-            spanish = "Usando oscuros hechizos, robó las sabidurías más preciosas: los números, los colores, los días, los meses, las partes del cuerpo y los verbos esenciales para la vida.",
-            nahuatl = "Tlāzah in tlapōhualtih, tōnaltih, metztli, in tlapechtih, ihuan in ixtlākatl, ōmohuīka mochi in cenca huel tlahcuilolli in aic huihtilih.",
+            english = "But an ambitious shaman, known as Xiloticahualli, sought to gain all that power for himself."
+        }
+        , {
+            spanish = "Usando oscuros hechizos, robo las sabidurias mas preciosas: los numeros, los colores, los dias, los meses, las partes del cuerpo y los verbos esenciales para la vida.",
+            nahuatl = "Tlahzah in tlapohualtih, tonaltih, metztli, in tlapechtih, ihuan in ixtlakatl, omohuika mochi in cenca huel tlahcuilolli in aic huihtilih.",
             english = "Using dark spells, he stole the most precious wisdom: the numbers, colors, days, months, body parts, and verbs essential for life."
-        }, {
-            spanish = "Despojados de su conocimiento, los pueblos de Aztlán cayeron en el olvido, y la tierra de los dioses perdió su conexión con los secretos del mundo.",
-            nahuatl = "In tlākatl Aztlān ōmoquiza inīn tlahcuilolli, ihuan tōtlāltikpak ōmīxpātlalīxih in itēucyotl.",
-            english = "Deprived of their knowledge, the people of Aztlán fell into oblivion, and the land of the gods lost its connection with the secrets of the world."
-        }, {
-            spanish = "Ahora, las islas dispersas por todo el mundo guardan estos fragmentos de sabiduría, sellados y protegidos por criaturas ancestrales.",
-            nahuatl = "Axcan, in tēcpantli xochitoca īpan tōtlāltikpak, ōtlācah inīn tlahtlāhueliloc yancuīc ahpōtli, tlahcuiloh in tēyohcāntli.",
+        }
+        , {
+            spanish = "Despojados de su conocimiento, los pueblos de Aztlan cayeron en el olvido, y la tierra de los dioses perdio su conexion con los secretos del mundo.",
+            nahuatl = "In tlakatl Aztlan omokuiza inin tlahcuilolli, ihuan totlaltikpak omixpatlalixih in iteucyotl.",
+            english = "Deprived of their knowledge, the people of Aztlan fell into oblivion, and the land of the gods lost its connection with the secrets of the world."
+        }
+        , {
+            spanish = "Ahora, las islas dispersas por todo el mundo guardan estos fragmentos de sabiduria, sellados y protegidos por criaturas ancestrales.",
+            nahuatl = "Axkan, in tecpantli xochitoca ipan totlaltikpak, otlakah inin tlahtlahueliloc yankuik ahpotli, tlahcuiloh in teyohkantli.",
             english = "Now, the islands scattered across the world hold these fragments of wisdom, sealed and protected by ancient creatures."
-        }, {
-            spanish = "Tú, joven guerrero, eres el elegido para restaurar el equilibrio.",
-            nahuatl = "Tīcitlato, tlākatl pilī, īnimohcōhuahtōn. Tīnemi motlamachihualiztli.",
+        }
+        , {
+            spanish = "Tu, joven guerrero, eres el elegido para restaurar el equilibrio.",
+            nahuatl = "Ticitlato, tlakatl pili, inimochohuaton. Tinemi motlamachihualiztli.",
             english = "You, young warrior, are the chosen one to restore balance."
-        }, {
-            spanish = "Tu misión es embarcarte en un viaje épico a través de las Islas del Saber, recuperar las palabras robadas y derrotar a los guardianes que las protegen.",
-            nahuatl = "Timotlatol ōmmitztlahtoh in īpan in Islas del Saber; motlaneltoc in nāhuatl ihuan tēmāctzin.",
-            english = "Your mission is to embark on an epic journey across the Islands of Knowledge, recover the stolen words, and defeat the guardians that protect them"
-        }, {
-            spanish = "Cada isla es un reflejo de un aspecto esencial de la sabiduría perdida, y solo con tu habilidad y memoria podrás restaurar lo que se ha desvanecido.",
-            nahuatl = "Oc cenca in mēxihcatlītl, nāuh cenca tlamanih tequiti.",
+        }
+        , {
+            spanish = "Tu mision es embarcarte en un viaje epico a traves de las Islas del Saber, recuperar las palabras robadas y derrotar a los guardianes que las protegen.",
+            nahuatl = "Timotlatol ommitztlahtoh in ipan in Islas del Saber; motlaneltoc in nahuatl ihuan temactzin.",
+            english = "Your mission is to embark on an epic journey across the Islands of Knowledge, recover the stolen words, and defeat the guardians that protect them."
+        }
+        , {
+            spanish = "Cada isla es un reflejo de un aspecto esencial de la sabiduria perdida, y solo con tu habilidad y memoria podras restaurar lo que se ha desvanecido.",
+            nahuatl = "Oc cenca in mexihcatlitl, nauh cenca tlamanih tequiti.",
             english = "Each island is a reflection of an essential aspect of the lost wisdom, and only with your skill and memory can you restore what has faded."
-        }, {
-            spanish = "A medida que recuperes las palabras en náhuatl, las sombras del caos comenzarán a desvanecerse y el verdadero conocimiento regresará a Aztlán.",
-            nahuatl = "Āmo iuhqui, in xochitlīn ōmiccah īpan tlālōcayotl, tlehco īxpan miquiz, huīcā itlācatlalīyoh in Tlahtoh.",
-            english = "As you recover the words in Nahuatl, the shadows of chaos will begin to fade, and true knowledge will return to Aztlán."
-        }, {
-            spanish = "Solo enfrentando las pruebas y venciendo al chamán Xīlōticahualli, podrás devolver a Aztlán su antiguo esplendor.",
-            nahuatl = "Neltlāzoh Xīlōticahualli, ōmiquilia ōtlahtoh īxpan īpanin Tlāltikpak.",
-            english = "Only by facing the trials and defeating the shaman Xīlōticahualli can you bring back Aztlán's ancient glory."
-        }, {
+        }
+        , {
+            spanish = "A medida que recuperes las palabras en nahuatl, las sombras del caos comenzaran a desvanecerse y el verdadero conocimiento regresara a Aztlan.",
+            nahuatl = "Amo iuhqui, in xochitlin omiccah ipan tlalocayotl, tlehco ixpan miquiz, huica itlacatlaliyoh in Tlahtoh.",
+            english = "As you recover the words in Nahuatl, the shadows of chaos will begin to fade, and true knowledge will return to Aztlan."
+        }
+        , {
+            spanish = "Solo enfrentando las pruebas y venciendo al chaman Xiloticahualli, podras devolver a Aztlan su antiguo esplendor.",
+            nahuatl = "Neltlazoh Xiloticahualli, omiquilia otlahtoh ixpan ipanin Tlaltilpak.",
+            english = "Only by facing the trials and defeating the shaman Xiloticahualli can you bring back Aztlan's ancient glory."
+        }
+        , {
             spanish = "Este es tu destino, el de recorrer las Islas del Saber y devolverle a tu gente el conocimiento perdido por siglos.",
-            nahuatl = "Tlāltikpak timohuan īhuān itlāmatiliz, huīcā cē nohuīca tōcēhuātl īpan tlānēz.",
+            nahuatl = "Tlaltilpak timohuan ihuān itlamatiliz, huica ce nohuihca tocehuatl ipan tlanez.",
             english = "This is your destiny, to traverse the Islands of Knowledge and return the lost wisdom to your people."
-        }, {
-            spanish = "El viaje hacia Aztlán comienza ahora.",
-            nahuatl = "Axcan, mochi timanoltōn īpan Tlahtoh Aztlān, ātl tlāltikpak.",
+        }
+        , {
+            spanish = "El viaje hacia Aztlan comienza ahora.",
+            nahuatl = "Axcan, mochi timanolton ipan Tlahtoh Aztlan, atl tlaltikpak.",
             english = "The journey to Aztlán begins now."
         }
+        
     }
 
     map(30, 34, 30, 17, 0, 0)
@@ -850,51 +883,19 @@ function TIC()
 end
 
 function flip_card(card)
+    local level_offset = get_level_offset()
     for x = card.x1, card.x2 do
         for y = card.y1, card.y2 do
-            if level == "numbers" then
-                mset(x, y, 255)
-            end
-            if level == "months" then
-                mset(x, y + 34, 255)
-            end
-            if level == "days" then
-                mset(x, y + 17, 255)
-            end
-            if level == "colors" then
-                mset(x, y + 85, 255)
-            end
-            if level == "bodyParts" then
-                mset(x, y + 68, 255)
-            end
-            if level == "verbs" then
-                mset(x, y + 51, 255)
-            end
+            mset(x, y + level_offset, 255)
         end
     end
 end
 
 function reset_card(card)
+    local level_offset = get_level_offset()
     for x = card.x1, card.x2 do
         for y = card.y1, card.y2 do
-            if level == "numbers" then
-                mset(x, y, 0)
-            end
-            if level == "months" then
-                mset(x, y + 34, 0)
-            end
-            if level == "days" then
-                mset(x, y + 17, 0)
-            end
-            if level == "colors" then
-                mset(x, y + 85, 0)
-            end
-            if level == "bodyParts" then
-                mset(x, y + 68, 0)
-            end
-            if level == "verbs" then
-                mset(x, y + 51, 0)
-            end
+            mset(x, y + level_offset, 0)
         end
     end
 end
