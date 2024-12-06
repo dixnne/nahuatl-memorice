@@ -15,24 +15,24 @@ jobs:
 
       - name: Remove previous files
         run: |
-          rm -r docs
+          rm -r html
 
       - name: Unzip the uploaded file
         run: |
           unzip -o game/nahuatl-memorice.zip -d temp_unzip/
 
-      - name: Move unzipped files to /docs
+      - name: Move unzipped files to /html
         run: |
           mkdir -p docs
-          cp -r temp_unzip/* docs/
+          cp -r temp_unzip/* html/
           rm -r temp_unzip
 
       - name: Commit and push changes
         run: |
           git config user.name "Diana Narvaez"
           git config user.email "dixnne@users.noreply.github.com"
-          git add docs
-          git commit -m "Update docs with unzipped content"
+          git add html
+          git commit -m "Update html with unzipped content"
           git push
 
   prepare-deploy:
