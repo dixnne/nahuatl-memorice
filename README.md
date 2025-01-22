@@ -1,6 +1,6 @@
 # Aztlán: Las Islas del Saber
 
-"Aztlán: Las Islas del Saber" es un juego educativo y de aventuras diseñado para plataformas web y móviles. El objetivo principal es recuperar el conocimiento perdido del náhuatl a través de un emocionante viaje por islas temáticas, cada una custodiada por criaturas ancestrales y desafíos que pondrán a prueba la memoria y habilidades del jugador.
+"Aztlán: Las Islas del Saber" es un juego educativo y de aventuras diseñado para plataformas web y móviles desarrollado en lua con TIC80. El objetivo principal es recuperar el conocimiento perdido del náhuatl a través de un emocionante viaje por islas temáticas, cada una custodiada por criaturas ancestrales y desafíos que pondrán a prueba la memoria y habilidades del jugador.
 
 Cacahuate Studios se enorgullece de estar a favor de la integración de diferentes culturas y lenguajes, ya que esto es un pilar indispensable para el desarrollo como sociedad.
 
